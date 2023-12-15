@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const courseValidation = z.object({
+export const courseValidationSchema = z.object({
   title: z.string(),
   instructor: z.string(),
   //   categoryId: z.string(),

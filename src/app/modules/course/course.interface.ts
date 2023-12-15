@@ -1,14 +1,14 @@
-import { Types } from 'mongoose';
+// import { Types } from 'mongoose';
 
 export type TCourse = {
   title: string;
   instructor: string;
-  categoryId: Types.ObjectId;
+  // categoryId: Types.ObjectId;
   price: number;
-  //   tags: {
-  //     name: string;
-  //     isDeleted: boolean;
-  //   }[];
+  tags: {
+    name: string;
+    isDeleted: boolean;
+  }[];
   startDate: string;
   endDate: string;
   language: string;
