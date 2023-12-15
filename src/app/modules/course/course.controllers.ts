@@ -16,11 +16,6 @@ const createCourse = async (
       data: result,
     });
   } catch (err) {
-    // res.status(500).json({
-    //   success: false,
-    //   message: err.message || 'Something went wrong',
-    //   error: err,
-    // });
     next(err);
   }
 };

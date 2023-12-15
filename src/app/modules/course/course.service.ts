@@ -25,7 +25,6 @@ const updateCourseFromDB = async (id: string, courseData: TCourse) => {
     new: true,
     runValidators: true,
   });
-  console.log(result);
   return result;
 };
 

@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const courseValidationSchema = z.object({
   title: z.string(),
   instructor: z.string(),
-  //   categoryId: z.string(),
+  categoryId: z.string(),
   price: z.number(),
   tags: z.array(
     z.object({

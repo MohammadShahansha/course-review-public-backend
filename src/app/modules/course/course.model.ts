@@ -11,11 +11,11 @@ const CourseSchema = new Schema<TCourse>({
     type: String,
     required: true,
   },
-  // categoryId: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Category',
-  //   required: true,
-  // },
+  categoryId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Categories',
+    required: true,
+  },
   price: {
     type: Number,
     required: true,
