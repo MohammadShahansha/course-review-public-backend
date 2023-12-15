@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import { courseRouter } from './app/modules/course/course.routes';
+import globalErrorHandler from './app/middlewares/globalErrorHandeler';
 const app: Application = express();
 
 // parsers
@@ -12,5 +13,7 @@ app.use('/api', courseRouter);
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
+
+app.use(globalErrorHandler);
 
 export default app;

@@ -1,8 +1,12 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { courseValidationSchema } from './course.zod.validation';
 import { courseServices } from './course.service';
 
-const createCourse = async (req: Request, res: Response) => {
+const createCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const zodParseData = courseValidationSchema.parse(req.body);
     const result = await courseServices.createCourseIntoDB(zodParseData);
@@ -11,16 +15,21 @@ const createCourse = async (req: Request, res: Response) => {
       message: 'course created successfully!',
       data: result,
     });
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: err.message || 'Something went wrong',
-      error: err,
-    });
+  } catch (err) {
+    // res.status(500).json({
+    //   success: false,
+    //   message: err.message || 'Something went wrong',
+    //   error: err,
+    // });
+    next(err);
   }
 };
 
-const getAllCourse = async (req: Request, res: Response) => {
+const getAllCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const result = await courseServices.getAllCourseFromDB();
     res.status(200).json({
@@ -29,11 +38,15 @@ const getAllCourse = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
-const getSingleCourse = async (req: Request, res: Response) => {
+const getSingleCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { id } = req.params;
     const result = await courseServices.getSingleCourseFromDB(id);
@@ -42,19 +55,16 @@ const getSingleCourse = async (req: Request, res: Response) => {
       message: 'single course fetched successfully!',
       data: result,
     });
-  } catch (err: any) {
-    res.status(404).json({
-      success: false,
-      message: err.message || 'course not found',
-      error: {
-        code: 404,
-        description: 'course not found!',
-      },
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
-const updateCourse = async (req: Request, res: Response) => {
+const updateCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { courseId } = req.params;
     const courseData = req.body;
@@ -67,18 +77,15 @@ const updateCourse = async (req: Request, res: Response) => {
       message: 'course updated successfully!',
       data: result,
     });
-  } catch (err: any) {
-    res.status(404).json({
-      success: false,
-      message: err.message || 'course not found',
-      error: {
-        code: 404,
-        description: 'course not found!',
-      },
-    });
+  } catch (err) {
+    next(err);
   }
 };
-const deleteCourse = async (req: Request, res: Response) => {
+const deleteCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { id } = req.params;
     await courseServices.deleteCourseFromDB(id);
@@ -87,15 +94,8 @@ const deleteCourse = async (req: Request, res: Response) => {
       message: 'course deleted successfully!',
       data: null,
     });
-  } catch (err: any) {
-    res.status(404).json({
-      success: false,
-      message: err.message || 'course not found',
-      error: {
-        code: 404,
-        description: 'course not found!',
-      },
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
