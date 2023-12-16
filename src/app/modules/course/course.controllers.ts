@@ -43,8 +43,8 @@ const getSingleCourse = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
-    const result = await courseServices.getSingleCourseFromDB(id);
+    const { courseId } = req.params;
+    const result = await courseServices.getSingleCourseFromDB(courseId);
     res.status(200).json({
       success: true,
       message: 'single course fetched successfully!',

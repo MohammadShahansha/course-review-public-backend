@@ -20,8 +20,24 @@ const getSingleCourseFromDB = async (id: string) => {
   return result;
 };
 
-const updateCourseFromDB = async (id: string, courseData: TCourse) => {
-  const result = await Course.findByIdAndUpdate(id, courseData, {
+const updateCourseFromDB = async (id: string, courseData: Partial<TCourse>) => {
+  const { tags, details, ...remainingCourseData } = courseData;
+  const modifiedUpdateData: Record<string, unknown> = {
+    ...remainingCourseData,
+  };
+
+  if (tags && tags.length) {
+    for (const [key, value] of Object.entries(tags)) {
+      modifiedUpdateData[`tags.${key}`] = value;
+    }
+  }
+  if (details && Object.keys(details).length) {
+    for (const [key, value] of Object.entries(details)) {
+      modifiedUpdateData[`details.${key}`] = value;
+    }
+  }
+
+  const result = await Course.findByIdAndUpdate(id, modifiedUpdateData, {
     new: true,
     runValidators: true,
   });
