@@ -113,6 +113,23 @@ const getAllReviewWithCourse = async (
     next(err);
   }
 };
+// //find best course-----------------
+// const getBestCourse = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     const result = await courseServices.getBestCourseFromDB();
+//     res.status(200).json({
+//       success: true,
+//       message: 'get best course successfully!',
+//       data: result,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 
 export const courseController = {
   createCourse,
@@ -121,4 +138,5 @@ export const courseController = {
   updateCourse,
   deleteCourse,
   getAllReviewWithCourse,
+  // getBestCourse,
 };
