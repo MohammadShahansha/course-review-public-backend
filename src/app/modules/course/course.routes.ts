@@ -12,6 +12,10 @@ router.put(
   validateRequest(updateCourseValidationSchema),
   courseController.updateCourse,
 );
+router.get(
+  '/courses/:courseId/reviews',
+  courseController.getAllReviewWithCourse,
+);
 // router.delete('/:id', courseController.deleteCourse);
 
 export const courseRouter = router;

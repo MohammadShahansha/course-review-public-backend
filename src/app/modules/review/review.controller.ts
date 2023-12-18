@@ -36,27 +36,27 @@ const getAllReview = async (
     next(err);
   }
 };
-const getAllReviewWithCourse = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const { courseId } = req.params;
-    console.log('course:', courseId, req.body);
-    const result = await reviewServices.getAllReviewWithCourseFromDB(courseId);
-    res.status(200).json({
-      success: true,
-      message: 'get course and review successfully!',
-      data: result,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+// const getAllReviewWithCourse = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     const { courseId } = req.params;
+//     // console.log('course:', courseId, req.body);
+//     const result = await reviewServices.getAllReviewWithCourseFromDB(courseId);
+//     res.status(200).json({
+//       success: true,
+//       message: 'get course and review successfully!',
+//       data: result,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 
 export const reviewController = {
   createReview,
   getAllReview,
-  getAllReviewWithCourse,
+  // getAllReviewWithCourse,
 };

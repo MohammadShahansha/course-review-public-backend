@@ -94,10 +94,31 @@ const deleteCourse = async (
   }
 };
 
+//get all review and related data
+const getAllReviewWithCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { courseId } = req.params;
+    // console.log('course:', courseId, req.body);
+    const result = await courseServices.getAllReviewWithCourseFromDB(courseId);
+    res.status(200).json({
+      success: true,
+      message: 'get course and review successfully!',
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const courseController = {
   createCourse,
   getAllCourse,
   getSingleCourse,
   updateCourse,
   deleteCourse,
+  getAllReviewWithCourse,
 };

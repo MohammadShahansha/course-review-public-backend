@@ -7,6 +7,7 @@ import filter from '../../queryHelpers/filterQuery';
 import sort from '../../queryHelpers/sortQuery';
 import paginate from '../../queryHelpers/paginateQuery';
 import field from '../../queryHelpers/fieldQuery';
+import { Review } from '../review/review.model';
 
 const createCourseIntoDB = async (course: TCourse) => {
   //   if (await UserModel.isUserExists(user.userId)) {
@@ -64,10 +65,22 @@ const deleteCourseFromDB = async (id: string) => {
   return result;
 };
 
+//to get all review and services
+const getAllReviewWithCourseFromDB = async (id: string) => {
+  const course = await Course.findById(id);
+  const reviews = await Review.find({ courseId: id });
+  const result = {
+    course,
+    reviews,
+  };
+  return result;
+};
+
 export const courseServices = {
   createCourseIntoDB,
   getAllCourseFromDB,
   getSingleCourseFromDB,
   updateCourseFromDB,
   deleteCourseFromDB,
+  getAllReviewWithCourseFromDB,
 };
