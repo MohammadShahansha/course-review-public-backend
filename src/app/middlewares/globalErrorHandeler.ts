@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ZodError, ZodIssue } from 'zod';
-import { TErrorSource } from '../interface/errors';
+// import { TErrorSource } from '../interface/errors';
 import config from '../config';
 import handleZodError from '../errors/handleZodError';
 import handleMongooseValidationError from '../errors/handleMongoosValidationError';
@@ -14,36 +15,43 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = 500;
   let message = err.message || 'Something went wrong';
 
-  let errorSources: TErrorSource = [
-    {
-      path: '',
-      message: 'something went wrong',
-    },
-  ];
+  //   let errorDetails = [
+  //     {
+  //       path: '',
+  //       message: 'something went wrong',
+  //     },
+  //   ];
+  let errorDetails;
+  let errorMessage;
 
   if (err instanceof ZodError) {
     const simplifiedError = handleZodError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    // errorMessage = simplifiedError?.errorMessage.map((ms) => {
+    //   ms.errorMsg;
+    // });
+    errorMessage = simplifiedError?.errorMessage;
+    errorDetails = simplifiedError?.errorDetails;
   } else if (err?.name === 'ValidationError') {
     const simplifiedError = handleMongooseValidationError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    errorDetails = simplifiedError?.errorDetails;
   } else if (err?.name === 'CastError') {
     const simplifiedError = handleCastError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    errorMessage = simplifiedError?.errorMessage;
+    errorDetails = simplifiedError?.errorDetails;
   } else if (err?.code === 11000) {
     const simplifiedError = handleDuplicateError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    errorDetails = simplifiedError?.errorDetails;
   } else if (err instanceof Error) {
     message = err.message;
-    errorSources = [
+    errorDetails = [
       {
         path: '',
         message: err?.message,
@@ -54,7 +62,8 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   return res.status(statusCode).json({
     success: false,
     message,
-    errorSources,
+    errorMessage,
+    errorDetails,
     err,
     stack: config.node_env === 'development' ? err?.stack : null,
     // error: err,

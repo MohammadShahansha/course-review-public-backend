@@ -1,18 +1,25 @@
+/* eslint-disable no-unused-expressions */
 import { ZodError, ZodIssue } from 'zod';
-import { TErrorRespons, TErrorSource } from '../interface/errors';
+// import { TErrorRespons, TErrorSource } from '../interface/errors';
 
-const handleZodError = (err: ZodError): TErrorRespons => {
-  const errorSources: TErrorSource = err.issues.map((issue: ZodIssue) => {
+const handleZodError = (err: ZodError) => {
+  // const errorMessage = `${issue?.path[issue.path.length - 1]} is not a valid ID! `;
+  const errorMessage = err.issues.map((issue: ZodIssue) => {
     return {
-      path: issue?.path[issue.path.length - 1],
-      message: issue.message,
+      errorMsg: `${issue?.path[issue.path.length - 1]} is required`,
     };
   });
+  // const errorMessage = err.issues.map((issue: ZodIssue) => {
+  //   `${issue?.path[issue.path.length - 1]} is required`;
+  // });
+  const errorDetails = err;
+
   const statusCode = 400;
   return {
     statusCode,
-    message: 'Zod Validation Error',
-    errorSources,
+    message: 'Validation Error',
+    errorMessage,
+    errorDetails,
   };
 };
 export default handleZodError;

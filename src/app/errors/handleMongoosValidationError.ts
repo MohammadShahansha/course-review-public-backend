@@ -1,10 +1,8 @@
 import mongoose from 'mongoose';
-import { TErrorRespons, TErrorSource } from '../interface/errors';
+// import { TErrorRespons, TErrorSource } from '../interface/errors';
 
-const handleMongooseValidationError = (
-  err: mongoose.Error.ValidationError,
-): TErrorRespons => {
-  const errorSources: TErrorSource = Object.values(err.errors).map(
+const handleMongooseValidationError = (err: mongoose.Error.ValidationError) => {
+  const errorDetails = Object.values(err.errors).map(
     (val: mongoose.Error.ValidatorError | mongoose.Error.CastError) => {
       return {
         path: val?.path,
@@ -16,8 +14,8 @@ const handleMongooseValidationError = (
   const statusCode = 400;
   return {
     statusCode,
-    message: 'Zod Validation Error',
-    errorSources,
+    message: 'Validation Error',
+    errorDetails,
   };
 };
 

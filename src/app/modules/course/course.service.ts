@@ -1,17 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-undef */
+// import { Query } from 'mongoose';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
+import filter from '../../queryHelpers/filterQuery';
+import sort from '../../queryHelpers/sortQuery';
+import paginate from '../../queryHelpers/paginateQuery';
+import field from '../../queryHelpers/fieldQuery';
 
 const createCourseIntoDB = async (course: TCourse) => {
   //   if (await UserModel.isUserExists(user.userId)) {
   //     throw new Error('User already exists!');
   //   }
   const result = await Course.create(course);
-
   return result;
 };
 
-const getAllCourseFromDB = async () => {
-  const result = await Course.find();
+const getAllCourseFromDB = async (query: any) => {
+  // console.log(query);
+  // if (query.tags) {
+  //   query = { tags: 'tags.name' };
+  // }
+  const filterQuery = filter(Course.find(), query);
+  const sortQuery = sort(filterQuery, query);
+  const paginateQuery = paginate(sortQuery, query);
+  const selectedFieldQuery = field(paginateQuery, query);
+
+  const result = await selectedFieldQuery;
   return result;
 };
 
