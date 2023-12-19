@@ -1,17 +1,12 @@
 /* eslint-disable no-unused-expressions */
 import { ZodError, ZodIssue } from 'zod';
-// import { TErrorRespons, TErrorSource } from '../interface/errors';
 
 const handleZodError = (err: ZodError) => {
-  // const errorMessage = `${issue?.path[issue.path.length - 1]} is not a valid ID! `;
   const errorMessage = err.issues.map((issue: ZodIssue) => {
     return {
-      errorMsg: `${issue?.path[issue.path.length - 1]} is required`,
+      errorMessage: `${issue?.path[issue.path.length - 1]} is required.`,
     };
   });
-  // const errorMessage = err.issues.map((issue: ZodIssue) => {
-  //   `${issue?.path[issue.path.length - 1]} is required`;
-  // });
   const errorDetails = err;
 
   const statusCode = 400;

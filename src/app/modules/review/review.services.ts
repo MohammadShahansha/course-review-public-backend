@@ -7,10 +7,6 @@ const createReviewIntoDB = async (review: TReview) => {
   return result;
 };
 
-const getAllReviewFromDB = async () => {
-  const result = await Review.find();
-  return result;
-};
 //find best course----------------
 const getBestCourseFromDB = async () => {
   const bestAvarageRating = await Review.aggregate([
@@ -39,6 +35,5 @@ const getBestCourseFromDB = async () => {
 };
 export const reviewServices = {
   createReviewIntoDB,
-  getAllReviewFromDB,
   getBestCourseFromDB,
 };

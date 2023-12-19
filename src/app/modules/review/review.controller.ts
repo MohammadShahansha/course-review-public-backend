@@ -21,22 +21,6 @@ const createReview = async (
   }
 };
 
-const getAllReview = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const result = await reviewServices.getAllReviewFromDB();
-    res.status(200).json({
-      success: true,
-      message: 'review fetched successfully!',
-      data: result,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
 //find best course-----------------
 const getBestCourse = async (
   req: Request,
@@ -58,6 +42,5 @@ const getBestCourse = async (
 
 export const reviewController = {
   createReview,
-  getAllReview,
   getBestCourse,
 };

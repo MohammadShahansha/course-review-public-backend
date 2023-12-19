@@ -20,7 +20,9 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     const simplifiedError = handleZodError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorMessage = simplifiedError?.errorMessage;
+    errorMessage = simplifiedError?.errorMessage.map(
+      (errmsg) => errmsg.errorMessage,
+    );
     errorDetails = simplifiedError?.errorDetails;
   } else if (err?.name === 'ValidationError') {
     const simplifiedError = handleMongooseValidationError(err);
