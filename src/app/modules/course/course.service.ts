@@ -24,19 +24,20 @@ const getAllCourseFromDB = async (query: any) => {
   return result;
 };
 
-const getSingleCourseFromDB = async (id: string) => {
-  const result = await Course.findById(id);
-  return result;
-};
+// const getSingleCourseFromDB = async (id: string) => {
+//   const result = await Course.findById(id);
+//   return result;
+// };
 
 const updateCourseFromDB = async (id: string, courseData: Partial<TCourse>) => {
   const { tags, details, ...remainingCourseData } = courseData;
+  const updateTags = tags ? tags.filter((tag) => !tag.isDeleted) : undefined;
   const modifiedUpdateData: Record<string, unknown> = {
     ...remainingCourseData,
   };
 
-  if (tags && tags.length) {
-    for (const [key, value] of Object.entries(tags)) {
+  if (updateTags && updateTags.length) {
+    for (const [key, value] of Object.entries(updateTags)) {
       modifiedUpdateData[`tags.${key}`] = value;
     }
   }
@@ -53,10 +54,10 @@ const updateCourseFromDB = async (id: string, courseData: Partial<TCourse>) => {
   return result;
 };
 
-const deleteCourseFromDB = async (id: string) => {
-  const result = await Course.findByIdAndDelete(id);
-  return result;
-};
+// const deleteCourseFromDB = async (id: string) => {
+//   const result = await Course.findByIdAndDelete(id);
+//   return result;
+// };
 
 //to get all review and services
 const getAllReviewWithCourseFromDB = async (id: string) => {
@@ -72,8 +73,8 @@ const getAllReviewWithCourseFromDB = async (id: string) => {
 export const courseServices = {
   createCourseIntoDB,
   getAllCourseFromDB,
-  getSingleCourseFromDB,
+  // getSingleCourseFromDB,
   updateCourseFromDB,
-  deleteCourseFromDB,
+  // deleteCourseFromDB,
   getAllReviewWithCourseFromDB,
 };

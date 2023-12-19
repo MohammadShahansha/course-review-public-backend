@@ -4,7 +4,6 @@ import { Review } from './review.model';
 
 const createReviewIntoDB = async (review: TReview) => {
   const result = await Review.create(review);
-
   return result;
 };
 
@@ -14,7 +13,6 @@ const getAllReviewFromDB = async () => {
 };
 //find best course----------------
 const getBestCourseFromDB = async () => {
-  // const course = await Course.findById(id);
   const bestAvarageRating = await Review.aggregate([
     {
       $group: {

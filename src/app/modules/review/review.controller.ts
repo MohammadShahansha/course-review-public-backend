@@ -12,7 +12,8 @@ const createReview = async (
     const result = await reviewServices.createReviewIntoDB(zodParseData);
     res.status(200).json({
       success: true,
-      message: 'review created successfully!',
+      statusCode: 201,
+      message: 'Review created successfully',
       data: result,
     });
   } catch (err) {
@@ -46,7 +47,8 @@ const getBestCourse = async (
     const result = await reviewServices.getBestCourseFromDB();
     res.status(200).json({
       success: true,
-      message: 'get best course successfully!',
+      statusCode: 200,
+      message: 'Best course retrieved successfully',
       data: result,
     });
   } catch (err) {

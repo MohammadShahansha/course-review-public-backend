@@ -26,7 +26,8 @@ const createCourse = async (
     const result = await courseServices.createCourseIntoDB(courseWithWeeks);
     res.status(200).json({
       success: true,
-      message: 'course created successfully!',
+      statusCode: 201,
+      message: 'Course created successfully',
       data: result,
     });
   } catch (err) {
@@ -43,7 +44,8 @@ const getAllCourse = async (
     const result = await courseServices.getAllCourseFromDB(req.query);
     res.status(200).json({
       success: true,
-      message: 'course fetched successfully!',
+      statuCode: 200,
+      message: 'Courses retrieved successfully',
       data: result,
     });
   } catch (err) {
@@ -51,23 +53,23 @@ const getAllCourse = async (
   }
 };
 
-const getSingleCourse = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const { courseId } = req.params;
-    const result = await courseServices.getSingleCourseFromDB(courseId);
-    res.status(200).json({
-      success: true,
-      message: 'single course fetched successfully!',
-      data: result,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+// const getSingleCourse = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     const { courseId } = req.params;
+//     const result = await courseServices.getSingleCourseFromDB(courseId);
+//     res.status(200).json({
+//       success: true,
+//       message: 'single course fetched successfully!',
+//       data: result,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 
 const updateCourse = async (
   req: Request,
@@ -83,30 +85,31 @@ const updateCourse = async (
     );
     res.status(200).json({
       success: true,
-      message: 'course updated successfully!',
+      statusCode: 200,
+      message: 'Course updated successfully',
       data: result,
     });
   } catch (err) {
     next(err);
   }
 };
-const deleteCourse = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const { id } = req.params;
-    await courseServices.deleteCourseFromDB(id);
-    res.status(200).json({
-      success: true,
-      message: 'course deleted successfully!',
-      data: null,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+// const deleteCourse = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     const { id } = req.params;
+//     await courseServices.deleteCourseFromDB(id);
+//     res.status(200).json({
+//       success: true,
+//       message: 'course deleted successfully!',
+//       data: null,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 
 //get all review and related data
 const getAllReviewWithCourse = async (
@@ -119,7 +122,8 @@ const getAllReviewWithCourse = async (
     const result = await courseServices.getAllReviewWithCourseFromDB(courseId);
     res.status(200).json({
       success: true,
-      message: 'get course and review successfully!',
+      statusCod: 200,
+      message: 'Course and Reviews retrieved successfully',
       data: result,
     });
   } catch (err) {
@@ -130,8 +134,6 @@ const getAllReviewWithCourse = async (
 export const courseController = {
   createCourse,
   getAllCourse,
-  getSingleCourse,
   updateCourse,
-  deleteCourse,
   getAllReviewWithCourse,
 };
