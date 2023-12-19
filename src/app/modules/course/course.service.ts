@@ -23,12 +23,6 @@ const getAllCourseFromDB = async (query: any) => {
   const result = await selectedFieldQuery;
   return result;
 };
-
-// const getSingleCourseFromDB = async (id: string) => {
-//   const result = await Course.findById(id);
-//   return result;
-// };
-
 const updateCourseFromDB = async (id: string, courseData: Partial<TCourse>) => {
   const { tags, details, ...remainingCourseData } = courseData;
   const updateTags = tags ? tags.filter((tag) => !tag.isDeleted) : undefined;
@@ -53,12 +47,6 @@ const updateCourseFromDB = async (id: string, courseData: Partial<TCourse>) => {
   });
   return result;
 };
-
-// const deleteCourseFromDB = async (id: string) => {
-//   const result = await Course.findByIdAndDelete(id);
-//   return result;
-// };
-
 //to get all review and services
 const getAllReviewWithCourseFromDB = async (id: string) => {
   const course = await Course.findById(id);
@@ -73,8 +61,6 @@ const getAllReviewWithCourseFromDB = async (id: string) => {
 export const courseServices = {
   createCourseIntoDB,
   getAllCourseFromDB,
-  // getSingleCourseFromDB,
   updateCourseFromDB,
-  // deleteCourseFromDB,
   getAllReviewWithCourseFromDB,
 };

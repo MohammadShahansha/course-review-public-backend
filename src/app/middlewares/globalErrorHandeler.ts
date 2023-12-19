@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ZodError, ZodIssue } from 'zod';
-// import { TErrorSource } from '../interface/errors';
 import config from '../config';
 import handleZodError from '../errors/handleZodError';
 import handleMongooseValidationError from '../errors/handleMongoosValidationError';
@@ -14,13 +13,6 @@ import handleDuplicateError from '../errors/handleDuplicateError';
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   let statusCode = 500;
   let message = err.message || 'Something went wrong';
-
-  //   let errorDetails = [
-  //     {
-  //       path: '',
-  //       message: 'something went wrong',
-  //     },
-  //   ];
   let errorDetails;
   let errorMessage;
 
@@ -28,9 +20,6 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     const simplifiedError = handleZodError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    // errorMessage = simplifiedError?.errorMessage.map((ms) => {
-    //   ms.errorMsg;
-    // });
     errorMessage = simplifiedError?.errorMessage;
     errorDetails = simplifiedError?.errorDetails;
   } else if (err?.name === 'ValidationError') {

@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post('/course', courseController.createCourse);
 router.get('/courses', courseController.getAllCourse);
-// router.get('/courses/:courseId', courseController.getSingleCourse);
 router.put(
   '/courses/:courseId',
   validateRequest(updateCourseValidationSchema),
@@ -16,7 +15,5 @@ router.get(
   '/courses/:courseId/reviews',
   courseController.getAllReviewWithCourse,
 );
-// router.get('/courses/best', courseController.getBestCourse);
-// router.delete('/:id', courseController.deleteCourse);
 
 export const courseRouter = router;

@@ -46,30 +46,17 @@ const getAllCourse = async (
       success: true,
       statuCode: 200,
       message: 'Courses retrieved successfully',
+      meta: {
+        page: Number(req.query?.page) || 1,
+        limit: Number(req.query?.limit) || 10,
+        total: result.length,
+      },
       data: result,
     });
   } catch (err) {
     next(err);
   }
 };
-
-// const getSingleCourse = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   try {
-//     const { courseId } = req.params;
-//     const result = await courseServices.getSingleCourseFromDB(courseId);
-//     res.status(200).json({
-//       success: true,
-//       message: 'single course fetched successfully!',
-//       data: result,
-//     });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 const updateCourse = async (
   req: Request,
@@ -93,23 +80,6 @@ const updateCourse = async (
     next(err);
   }
 };
-// const deleteCourse = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   try {
-//     const { id } = req.params;
-//     await courseServices.deleteCourseFromDB(id);
-//     res.status(200).json({
-//       success: true,
-//       message: 'course deleted successfully!',
-//       data: null,
-//     });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 //get all review and related data
 const getAllReviewWithCourse = async (
