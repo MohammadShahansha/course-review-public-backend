@@ -10,18 +10,11 @@ import field from '../../queryHelpers/fieldQuery';
 import { Review } from '../review/review.model';
 
 const createCourseIntoDB = async (course: TCourse) => {
-  //   if (await UserModel.isUserExists(user.userId)) {
-  //     throw new Error('User already exists!');
-  //   }
   const result = await Course.create(course);
   return result;
 };
 
 const getAllCourseFromDB = async (query: any) => {
-  // console.log(query);
-  // if (query.tags) {
-  //   query = { tags: 'tags.name' };
-  // }
   const filterQuery = filter(Course.find(), query);
   const sortQuery = sort(filterQuery, query);
   const paginateQuery = paginate(sortQuery, query);
@@ -75,33 +68,6 @@ const getAllReviewWithCourseFromDB = async (id: string) => {
   };
   return result;
 };
-//find best course----------------
-// const getBestCourseFromDB = async () => {
-//   // const course = await Course.findById(id);
-//   const bestAvarageRating = await Review.aggregate([
-//     {
-//       $group: {
-//         _id: '$courseId',
-//         averageRating: { $avg: '$rating' },
-//         reviewCount: { $sum: 1 },
-//       },
-//     },
-//     {
-//       $sort: { averageRating: -1 },
-//     },
-//     {
-//       $limit: 1,
-//     },
-//   ]);
-
-//   const bestCourse = await Course.findById(bestAvarageRating[0]._id);
-//   const result = {
-//     course: bestCourse,
-//     averageRating: bestAvarageRating[0].averageRating,
-//     reviewCount: bestAvarageRating[0].reviewCount,
-//   };
-//   return result;
-// };
 
 export const courseServices = {
   createCourseIntoDB,
@@ -110,5 +76,4 @@ export const courseServices = {
   updateCourseFromDB,
   deleteCourseFromDB,
   getAllReviewWithCourseFromDB,
-  // getBestCourseFromDB,
 };

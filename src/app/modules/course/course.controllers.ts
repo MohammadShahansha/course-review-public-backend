@@ -2,6 +2,12 @@ import { NextFunction, Request, Response } from 'express';
 import { courseValidationSchema } from './course.zod.validation';
 import { courseServices } from './course.service';
 
+const calculateWeeksDuration = (startDate: string, endDate: string): number => {
+  const startTime = Date.parse(startDate);
+  const endTime = Date.parse(endDate);
+  const result = Math.ceil((endTime - startTime) / (7 * 24 * 3600 * 1000));
+  return result;
+};
 const createCourse = async (
   req: Request,
   res: Response,
@@ -9,7 +15,15 @@ const createCourse = async (
 ) => {
   try {
     const zodParseData = courseValidationSchema.parse(req.body);
-    const result = await courseServices.createCourseIntoDB(zodParseData);
+    const durationInWeeks = calculateWeeksDuration(
+      zodParseData.startDate,
+      zodParseData.endDate,
+    );
+    const courseWithWeeks = {
+      ...zodParseData,
+      durationInWeeks,
+    };
+    const result = await courseServices.createCourseIntoDB(courseWithWeeks);
     res.status(200).json({
       success: true,
       message: 'course created successfully!',
@@ -102,7 +116,6 @@ const getAllReviewWithCourse = async (
 ) => {
   try {
     const { courseId } = req.params;
-    // console.log('course:', courseId, req.body);
     const result = await courseServices.getAllReviewWithCourseFromDB(courseId);
     res.status(200).json({
       success: true,
@@ -113,23 +126,6 @@ const getAllReviewWithCourse = async (
     next(err);
   }
 };
-// //find best course-----------------
-// const getBestCourse = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   try {
-//     const result = await courseServices.getBestCourseFromDB();
-//     res.status(200).json({
-//       success: true,
-//       message: 'get best course successfully!',
-//       data: result,
-//     });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 export const courseController = {
   createCourse,
@@ -138,5 +134,4 @@ export const courseController = {
   updateCourse,
   deleteCourse,
   getAllReviewWithCourse,
-  // getBestCourse,
 };

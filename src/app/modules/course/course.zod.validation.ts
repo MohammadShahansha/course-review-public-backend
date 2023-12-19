@@ -15,7 +15,7 @@ export const courseValidationSchema = z.object({
   endDate: z.string(),
   language: z.string(),
   provider: z.string(),
-  durationInWeeks: z.number(),
+  durationInWeeks: z.number().optional(),
   details: z.object({
     level: z.enum(['Beginner', 'Intermediate', 'Advanced']),
     description: z.string(),
@@ -39,7 +39,7 @@ export const updateCourseValidationSchema = z.object({
   endDate: z.string().optional(),
   language: z.string().optional(),
   provider: z.string().optional(),
-  durationInWeeks: z.number().optional(),
+  // durationInWeeks: z.number().optional(),
   details: z
     .object({
       level: z.enum(['Beginner', 'Intermediate', 'Advanced']),
